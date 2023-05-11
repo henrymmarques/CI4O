@@ -37,6 +37,54 @@ def arithmetic_xo(p1, p2):
     return o1, o2
 
 
+def sbx(parent1, parent2, eta=10, prob=0.5):
+    # Ensure parents are NumPy arrays
+    parent1 = np.array(parent1)
+    parent2 = np.array(parent2)
+
+    # Initialize offspring
+    offspring1 = np.empty_like(parent1)
+    offspring2 = np.empty_like(parent2)
+
+    # Loop over each gene
+    for i in range(parent1.shape[0]):
+        # Get the min and max values for the ith gene
+        xmin = min(parent1[i], parent2[i])
+        xmax = max(parent1[i], parent2[i])
+
+        # Calculate the range of the ith gene
+        dx = xmax - xmin
+
+        if dx > 0:
+            # Generate two random numbers between 0 and 1
+            u1 = random.random()
+            u2 = random.random()
+
+            # Calculate the beta parameter
+            if u1 <= 0.5:
+                beta = (2 * u1) ** (1 / (eta + 1))
+            else:
+                beta = (1 / (2 * (1 - u1))) ** (1 / (eta + 1))
+
+            # Calculate the child values
+            child1 = 0.5 * ((1 + beta) * parent1[i] + (1 - beta) * parent2[i])
+            child2 = 0.5 * ((1 - beta) * parent1[i] + (1 + beta) * parent2[i])
+
+            # Clip the child values to the range of the ith gene
+            child1 = np.clip(child1, xmin, xmax)
+            child2 = np.clip(child2, xmin, xmax)
+
+            # Assign the child values to the offspring
+            offspring1[i] = child1
+            offspring2[i] = child2
+        else:
+            # If the range is zero, just copy the parents to the offspring
+            offspring1[i] = parent1[i]
+            offspring2[i] = parent2[i]
+
+    return offspring1.tolist(), offspring2.tolist()
+
+
 if __name__ == '__main__':
     # Define the indices of the two parents
     parent1_index = 0
@@ -48,8 +96,9 @@ if __name__ == '__main__':
 
     # Perform the two-point crossover
     # offspring1, offspring2 = two_point_crossover(parent1, parent2)
-    offspring1, offspring2 = arithmetic_xo(parent1, parent2)
-
+    # offspring1, offspring2 = arithmetic_xo(parent1, parent2)
+    offspring1, offspring2 = sbx(parent1, parent2)
+    
     # Print the parents and child
     print(f"Parent 1: {data[parent1_index]}")
     print(f"Parent 2: {data[parent2_index]}")
