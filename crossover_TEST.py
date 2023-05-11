@@ -2,9 +2,6 @@ import random
 from data.data import nutrients, data
 import numpy as np
 
-
-
-
 def two_point_crossover(parent1, parent2):
     # Choose two random points in the genome
     pt1 = random.randint(0, len(parent1) - 1)
