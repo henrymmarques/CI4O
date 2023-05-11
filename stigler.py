@@ -3,7 +3,7 @@ from charles.search import hill_climb, sim_annealing
 from data.data import nutrients, data
 from charles.selection import fps, tournament_sel
 from charles.mutation import binary_mutation
-from charles.crossover import single_point_co
+# from charles.crossover import single_point_co
 from random import choices
 from copy import deepcopy
 import pandas as pd
@@ -49,3 +49,5 @@ pop = Population(size=len(df_data), optim="min", sol_size=len(data), valid_set=[
            elitism=True)'''
 
 
+if __name__ == '__main__':
+  print(data)
