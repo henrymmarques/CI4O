@@ -1,8 +1,20 @@
-from random import shuffle, choice, sample, random
+import random
 from operator import attrgetter
 from copy import deepcopy
 
+def generate_individual(num_foods=74, num_selected=5):
+    # Select 5 unique food indices
+    selected_indices = set()
+    while len(selected_indices) < num_selected:
+        selected_indices.add(random.randint(0, num_foods-1))
+    selected_indices = list(selected_indices)
 
+    # Generate random quantities for the selected foods
+    individual = [0] * num_foods
+    for i in selected_indices:
+        individual[i] = random.randint(1, 1000) / 100.0  # Generate a random quantity between 0.01 and 10.00
+
+    return individual
 
 class Individual:
     def __init__(
@@ -10,15 +22,13 @@ class Individual:
         representation=None,
         size=None,
         replacement=True,
-        valid_set=None,
-    ):
-        if representation == None:
-            if replacement == True:
-                self.representation = [choice(valid_set) for i in range(size)]
-            elif replacement == False:
-                self.representation = sample(valid_set, size)
+        valid_set=None,):
+
+        if representation is None:
+            self.representation = generate_individual(num_foods=len(valid_set), num_selected=5)
         else:
             self.representation = representation
+        self.valid_set = valid_set
         self.fitness = self.get_fitness()
 
     def get_fitness(self):
