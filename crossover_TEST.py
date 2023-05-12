@@ -26,6 +26,7 @@ def arithmetic_xo(p1, p2):
         p2 (Individual): Second parent for crossover.
 
     Returns:
+    
         Individuals: Two offspring, resulting from the crossover.
     """
     alpha = random.uniform(0, 1)
@@ -98,7 +99,7 @@ if __name__ == '__main__':
     # offspring1, offspring2 = two_point_crossover(parent1, parent2)
     # offspring1, offspring2 = arithmetic_xo(parent1, parent2)
     offspring1, offspring2 = sbx(parent1, parent2)
-    
+
     # Print the parents and child
     print(f"Parent 1: {data[parent1_index]}")
     print(f"Parent 2: {data[parent2_index]}")
