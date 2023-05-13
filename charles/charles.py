@@ -2,7 +2,7 @@ import random
 from operator import attrgetter
 from copy import deepcopy
 
-def generate_individual(num_foods=74, num_selected=5):
+def generate_individual(num_foods=74, num_selected=20):
     # Select 5 unique food indices
     selected_indices = set()
     while len(selected_indices) < num_selected:
@@ -12,7 +12,7 @@ def generate_individual(num_foods=74, num_selected=5):
     # Generate random quantities for the selected foods
     individual = [0] * num_foods
     for i in selected_indices:
-        individual[i] = random.randint(1, 1000) / 100.0  # Generate a random quantity between 0.01 and 10.00
+        individual[i] = random.randint(100, 1500) / 100.0  # Generate a random quantity between 0.01 and 10.00
 
     return individual
 
@@ -25,7 +25,7 @@ class Individual:
         valid_set=None,):
 
         if representation is None:
-            self.representation = generate_individual(num_foods=len(valid_set), num_selected=5)
+            self.representation = generate_individual(num_foods=len(valid_set), num_selected=20)
         else:
             self.representation = representation
         self.valid_set = valid_set

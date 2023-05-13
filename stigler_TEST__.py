@@ -33,7 +33,6 @@ def get_fitness(self):
     # return fitness
     return 1
 
-
 def get_neighbours(self):
     
     return 1
@@ -85,7 +84,7 @@ def extract_quantity(string):
 # Print the representation of each individual in the population
 for i, ind in enumerate(pop.individuals):
     print(f"Individual {i}: {ind.representation}")
-
+    fitness=0
     total_cost = 0
     calories = 0
     protein = 0
@@ -115,6 +114,44 @@ for i, ind in enumerate(pop.individuals):
             vitamin_B2 += ind.representation[i] * food[9] / original_qtd
             niacin += ind.representation[i] * food[10] / original_qtd
             vitamin_C += ind.representation[i] * food[11] / original_qtd
+            fitness=total_cost
+
+    if calories < nutrients[0][1]*365:
+        fitness=1000
+        print('Calories not sufficient')
+        print(calories, nutrients[0][1]*365)
+    if protein < nutrients[1][1]*365:
+        fitness=1000
+        print('Protein not sufficient')
+        print(protein, nutrients[1][1]*365)
+    if calcium < nutrients[2][1]*365:
+        fitness=1000
+        print('Calcium not sufficient')
+        print(calcium, nutrients[2][1]*365)
+    if iron < nutrients[3][1]*365:
+        fitness=1000
+        print('Iron not sufficient')
+        print(iron, nutrients[3][1]*365)
+    if vitamin_A < nutrients[4][1]*365:
+        fitness=1000
+        print('Vitamin A not sufficient')
+        print(vitamin_A, nutrients[4][1]*365)
+    if vitamin_B1 < nutrients[5][1]*365:
+        fitness=1000
+        print('Vitamin B1 not sufficient')
+        print(vitamin_B1, nutrients[5][1]*365)
+    if vitamin_B2 < nutrients[6][1]*365:
+        fitness=1000
+        print('Vitamin B2 not sufficient')
+        print(vitamin_B2, nutrients[6][1]*365)
+    if niacin < nutrients[7][1]*365:
+        fitness=1000
+        print('Niacin not sufficient')
+        print(niacin, nutrients[7][1]*365)
+    if vitamin_C < nutrients[8][1]*365:
+        fitness=1000
+        print('Vitamin C not sufficient')
+        print(vitamin_C, nutrients[8][1]*365)
 
     print(' ')
     print('cost = ' + str(total_cost))
@@ -128,7 +165,7 @@ for i, ind in enumerate(pop.individuals):
     print('niacin = ' + str(niacin))
     print('vitamin_C = ' + str(vitamin_C))
     print('_____________________________________________')
-
+    print('Fitness = ' + str(fitness))
 
 # if __name__ == '__main__':
 #   print(data)
