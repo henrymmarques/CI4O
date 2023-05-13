@@ -97,23 +97,25 @@ for i, ind in enumerate(pop.individuals):
     vitamin_C = 0
     for i, food in enumerate(data):
         if ind.representation[i] > 0:
+            #print(ind.representation[i])
             #get the quantity in data
             original_qtd = extract_quantity(food[1]) #this quantity costs 1 dollar
             
             #if original quantity costs 1 dollar, then ind.representation[i] costs x dollars
-            total_cost += ind.representation[i] / original_qtd
+            ## tirei em todas as variáveis a divisao pela original qtd!!!
+            total_cost += ind.representation[i]
 
-            # print(food[0] + ' - ' + str(food[2]))
+            #print(food[0] + ' - ' + str(food[2]))
 
-            calories += ind.representation[i] * food[3] / original_qtd
-            protein += ind.representation[i] * food[4] / original_qtd
-            calcium += ind.representation[i] * food[5] / original_qtd
-            iron += ind.representation[i] * food[6] / original_qtd
-            vitamin_A += ind.representation[i] * food[7] / original_qtd
-            vitamin_B1 += ind.representation[i] * food[8] / original_qtd
-            vitamin_B2 += ind.representation[i] * food[9] / original_qtd
-            niacin += ind.representation[i] * food[10] / original_qtd
-            vitamin_C += ind.representation[i] * food[11] / original_qtd
+            calories += ind.representation[i] * food[3]
+            protein += ind.representation[i] * food[4]
+            calcium += ind.representation[i] * food[5]
+            iron += ind.representation[i] * food[6]
+            vitamin_A += ind.representation[i] * food[7]
+            vitamin_B1 += ind.representation[i] * food[8] 
+            vitamin_B2 += ind.representation[i] * food[9] 
+            niacin += ind.representation[i] * food[10] 
+            vitamin_C += ind.representation[i] * food[11]
             fitness=total_cost
 
     if calories < nutrients[0][1]*365:
@@ -128,30 +130,37 @@ for i, ind in enumerate(pop.individuals):
         fitness=1000
         print('Calcium not sufficient')
         print(calcium, nutrients[2][1]*365)
+
     if iron < nutrients[3][1]*365:
         fitness=1000
         print('Iron not sufficient')
         print(iron, nutrients[3][1]*365)
+
     if vitamin_A < nutrients[4][1]*365:
         fitness=1000
         print('Vitamin A not sufficient')
         print(vitamin_A, nutrients[4][1]*365)
+
     if vitamin_B1 < nutrients[5][1]*365:
         fitness=1000
         print('Vitamin B1 not sufficient')
         print(vitamin_B1, nutrients[5][1]*365)
+
     if vitamin_B2 < nutrients[6][1]*365:
         fitness=1000
         print('Vitamin B2 not sufficient')
         print(vitamin_B2, nutrients[6][1]*365)
+
     if niacin < nutrients[7][1]*365:
         fitness=1000
         print('Niacin not sufficient')
         print(niacin, nutrients[7][1]*365)
+
     if vitamin_C < nutrients[8][1]*365:
         fitness=1000
         print('Vitamin C not sufficient')
         print(vitamin_C, nutrients[8][1]*365)
+
 
     print(' ')
     print('cost = ' + str(total_cost))
