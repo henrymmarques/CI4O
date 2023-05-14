@@ -92,16 +92,22 @@ if __name__ == '__main__':
     parent2_index = 1
 
     # Generate the two parents
-    parent1 = data[parent1_index][2:]
-    parent2 = data[parent2_index][2:]
+    # parent1 = data[parent1_index][2:]
+    # parent2 = data[parent2_index][2:]
+
+    parent1 = [0, 0, 0, 0, 0, 0, 0, 0, 4.4, 0, 0, 0, 0, 0, 0, 0, 12.9, 0, 0, 0, 14.08, 7.48, 0, 0, 0, 0, 5.15, 0, 0, 0, 0, 0, 0, 0, 14.58, 0, 0, 0, 0, 0, 0, 0, 4.61, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10.36, 0, 0, 0, 0, 0, 0, 0, 6.12, 13.71, 0, 0, 0, 0]
+    parent2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11.18, 0, 0, 0, 0, 0, 0, 8.33, 0, 0, 0, 0, 0, 0, 0, 0, 6.23, 0, 10.29, 0, 0, 0, 0, 1.72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6.06, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9.76, 0, 0, 0, 0, 10.41, 0, 6.02, 1.32, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
     # Perform the two-point crossover
     # offspring1, offspring2 = two_point_crossover(parent1, parent2)
     # offspring1, offspring2 = arithmetic_xo(parent1, parent2)
-    offspring1, offspring2 = sbx(parent1, parent2)
+    offspring1, offspring2 = two_point_crossover(parent1, parent2)
 
     # Print the parents and child
-    print(f"Parent 1: {data[parent1_index]}")
-    print(f"Parent 2: {data[parent2_index]}")
-    print(f"Offspring 1: {data[parent1_index][:2] + offspring1}")
-    print(f"Offspring 2: {data[parent2_index][:2] +offspring2}")
+    # print(f"Parent 1: {data[parent1_index]}")
+    # print(f"Parent 2: {data[parent2_index]}")
+    # print(f"Offspring 1: {data[parent1_index][:2] + offspring1}")
+    # print(f"Offspring 2: {data[parent2_index][:2] +offspring2}")
+
+    print(f"Offspring 1: {offspring1}")
+    print(f"Offspring 2: {offspring2}")

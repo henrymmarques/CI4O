@@ -64,7 +64,7 @@ class Population:
                     valid_set=kwargs["valid_set"],
                 )
             )
-    def evolve(self, gens, xo_prob, mut_prob, select, mutate, crossover, elitism):
+    def evolve(self, gens, xo_prob, select, crossover, elitism, stop_criteria=10):
 
         for i in range(gens):
             new_pop = []
@@ -78,15 +78,10 @@ class Population:
             while len(new_pop) < self.size:
                 parent1, parent2 = select(self), select(self)
 
-                if random() < xo_prob:
+                if random.random() < xo_prob:
                     offspring1, offspring2 = crossover(parent1, parent2)
                 else:
-                    offspring1, offspring2 = parent1, parent2
-
-                if random() < mut_prob:
-                    offspring1 = mutate(offspring1)
-                if random() < mut_prob:
-                    offspring2 = mutate(offspring2)
+                    offspring1, offspring2 = parent1.representation, parent2.representation
 
                 new_pop.append(Individual(representation=offspring1))
                 if len(new_pop) < self.size:
@@ -111,6 +106,11 @@ class Population:
                 print(f'Best Individual: {max(self, key=attrgetter("fitness"))}')
             elif self.optim == "min":
                 print(f'Best Individual: {min(self, key=attrgetter("fitness"))}')
+
+            # Check if the stopping criterion has been met
+            if stop_criteria is not None and i >= stop_criteria:
+                print(f"Stopping criteria met after {str(i+1)} generations")
+                break
 
     def __len__(self):
         return len(self.individuals)
