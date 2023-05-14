@@ -53,31 +53,6 @@ pop = Population(
 # $%$$$$$$$$$$$$$$ TESTES $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 #$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-''' TEM DE SE CORRIGIR PARA OS CASOS EM QUE A QUANTIDADE É No. 2 1/2'''
-
-def extract_quantity(string):
-    # First, we'll use regular expressions to extract the numerical quantity
-    pattern = r'(\d+(\.\d+)?)/?(\d+(\.\d+)?)?'
-    match = re.search(pattern, string)
-    if match is None:
-        return None
-    whole = match.group(1)
-    fraction = match.group(3)
-    
-    # If there's a fraction, we'll divide it by 2 to get the decimal equivalent
-    if fraction is not None:
-        fraction = str(float(fraction) / 2)
-    
-    # If there's both a whole and a fraction, we'll add them together
-    if whole is not None and fraction is not None:
-        return float(whole) + float(fraction)
-    
-    # Otherwise, we'll just return whichever one is not None
-    if whole is not None:
-        return float(whole)
-    else:
-        return float(fraction)
-    
 
 # print( extract_quantity ('1/2 stalk'))
 
@@ -98,8 +73,7 @@ for i, ind in enumerate(pop.individuals):
     for i, food in enumerate(data):
         if ind.representation[i] > 0:
             #print(ind.representation[i])
-            #get the quantity in data
-            original_qtd = extract_quantity(food[1]) #this quantity costs 1 dollar
+            
             
             #if original quantity costs 1 dollar, then ind.representation[i] costs x dollars
             ## tirei em todas as variáveis a divisao pela original qtd!!!
