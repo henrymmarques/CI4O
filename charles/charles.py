@@ -50,6 +50,7 @@ class Individual:
 
     def __repr__(self):
         return f"Individual(size={len(self.representation)}); Fitness: {self.fitness}"
+    
 
   
   
@@ -66,7 +67,7 @@ class Population:
                     valid_set=kwargs["valid_set"],
                 )
             )
-    def evolve(self, gens, xo_prob, select, crossover, elitism, stop_criteria=10):
+    def evolve(self, gens, xo_prob, select, crossover, elitism, mutate, mut_prob, stop_criteria=None):
 
         for i in range(gens):
             new_pop = []
@@ -84,6 +85,11 @@ class Population:
                     offspring1, offspring2 = crossover(parent1, parent2)
                 else:
                     offspring1, offspring2 = parent1.representation, parent2.representation
+
+                if random.random() < mut_prob:
+                    offspring1 = mutate(offspring1)
+                if random.random() < mut_prob:
+                    offspring2 = mutate(offspring2)
 
                 new_pop.append(Individual(representation=offspring1))
                 if len(new_pop) < self.size:
@@ -106,8 +112,13 @@ class Population:
 
             if self.optim == "max":
                 print(f'Best Individual: {max(self, key=attrgetter("fitness"))}')
+
             elif self.optim == "min":
-                print(f'Best Individual: {min(self, key=attrgetter("fitness"))}')
+                best=min(self, key=attrgetter("fitness"))
+                print('')
+                print(f'Best Individual: {best}')
+                print(best.representation)
+                # print(best.get_cost())
 
             # Check if the stopping criterion has been met
             if stop_criteria is not None and i >= stop_criteria:

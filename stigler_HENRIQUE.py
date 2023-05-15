@@ -2,6 +2,7 @@ from charles.charles import Population, Individual
 from charles.search import hill_climb, sim_annealing
 from charles.crossover import two_point_crossover, sbx, arithmetic_xo
 from charles.selection import tournament_sel, fps, rank_selection
+from charles.mutation import inversion_mutation, swap_mutation
 from data.data import nutrients, data
 from random import choices
 from copy import deepcopy
@@ -161,8 +162,8 @@ pop = Population(
     replacement=True,
     optim=optim)
 
-pop.evolve(gens=100, select=fps, crossover=two_point_crossover,
-           xo_prob=0.9, elitism=True)
+pop.evolve(gens=100, select=tournament_sel, crossover=two_point_crossover,
+           xo_prob=0.9, elitism=True, mutate=inversion_mutation, mut_prob=0.1)
 
 
 
