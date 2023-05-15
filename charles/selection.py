@@ -1,4 +1,4 @@
-from random import uniform, choice, sample
+from random import uniform, choice,choices
 from operator import attrgetter
 
 
@@ -26,7 +26,16 @@ def fps(population):
                 return individual
 
     elif population.optim == "min":
-        raise NotImplementedError
+        # Sum total inverse fitness
+        total_inverse_fitness = sum([1 / i.fitness for i in population])
+        # Get a 'position' on the wheel
+        spin = uniform(0, total_inverse_fitness)
+        position = 0
+        # Find individual in the position of the spin
+        for individual in population:
+            position += 1 / individual.fitness
+            if position > spin:
+                return individual
 
     else:
         raise Exception("No optimization specified (min or max).")
@@ -54,3 +63,30 @@ def tournament_sel(population, size=4):
         return max(tournament, key=attrgetter("fitness"))
     if population.optim == "min":
         return min(tournament, key=attrgetter("fitness"))
+    
+
+def rank_selection(population, num_parents=20):
+    """Rank selection implementation
+
+    Args:
+        population (list): List of individuals.
+        num_parents (int): Number of parents to select.
+
+    Returns:
+        list: List of selected parents.
+    """
+
+    if population.optim == 'max':
+        ranked_population = sorted(population, key=lambda x: x.fitness, reverse=True)
+    elif population.optim == 'min':
+        ranked_population = sorted(population, key=lambda x: x.fitness)
+    else:
+        raise ValueError("Invalid optimization type. Expected 'min' or 'max'.")
+
+    ranks = list(range(1, len(ranked_population) + 1))
+
+    probabilities = [rank / sum(ranks) for rank in ranks]
+
+    selected_parents = choices(ranked_population, probabilities, k=num_parents)
+
+    return selected_parents
