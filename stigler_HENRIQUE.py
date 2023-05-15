@@ -127,8 +127,28 @@ def get_fitness(self):
 
 
 def get_neighbours(self):
-    
-    return 1
+    """
+    Generates neighbors of an individual by slightly changing the amount of money spent on each food item.
+
+    Returns:
+        list: A list of neighbor individuals.
+    """
+    epsilon = 0.1  # The amount by which the money spent is changed
+
+    neighbors = []
+    for i, amount_spent in enumerate(self):
+        if amount_spent > 0:
+            # Increase the money spent on the food item by epsilon
+            increased_neighbor = self.copy()
+            increased_neighbor[i] += epsilon
+            neighbors.append(increased_neighbor)
+
+            # Decrease the money spent on the food item by epsilon
+            decreased_neighbor = self.copy()
+            decreased_neighbor[i] -= epsilon
+            neighbors.append(decreased_neighbor)
+
+    return neighbors
 
 # Monkey patching
 Individual.get_fitness = get_fitness
@@ -144,14 +164,9 @@ pop = Population(
 pop.evolve(gens=100, select=tournament_sel, crossover=two_point_crossover,
            xo_prob=0.9, elitism=True)
 
-# $%$$$$$$$$$$$$$$ TESTES $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-#$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 
-# print( extract_quantity ('1/2 stalk'))
-
-# Print the representation of each individual in the population
 
 
 # if __name__ == '__main__':
-#   print(data)
+#   print(get_neighbours([10.49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3.46, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3.33, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11.45, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10.2, 0, 0, 0, 0, 0, 0, 11.39, 14.39, 0, 0, 0, 0, 0, 0, 0, 0, 13.8, 0, 0, 0, 0, 0, 0, 0, 0]))
