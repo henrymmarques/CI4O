@@ -1,5 +1,13 @@
 import random
 
+def uniform_mutation(individual):
+    mutation_probability=0.1
+    for i in range(len(individual)):
+        lower_bound= individual.representation[i] - individual.representation[i]*0.1
+        upper_bound= individual.representation[i] + individual.representation[i]*0.1
+        if random.random() < mutation_probability:
+            individual[i] = random.uniform(lower_bound[i], upper_bound[i])
+    return individual
 
 def swap_mutation(individual):
     """Swap mutation for a GA individual. Swaps the bits.
