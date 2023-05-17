@@ -1,12 +1,11 @@
 import random
 
 def uniform_mutation(individual):
-    mutation_probability=0.1
+ 
     for i in range(len(individual)):
-        lower_bound= individual.representation[i] - individual.representation[i]*0.1
-        upper_bound= individual.representation[i] + individual.representation[i]*0.1
-        if random.random() < mutation_probability:
-            individual[i] = random.uniform(lower_bound[i], upper_bound[i])
+        lower_bound= individual[i] - individual[i]*0.1
+        upper_bound= individual[i] + individual[i]*0.1
+        individual[i] = random.uniform(lower_bound, upper_bound)
     return individual
 
 def swap_mutation(individual):
@@ -18,6 +17,8 @@ def swap_mutation(individual):
     Returns:
         Individual: Mutated Individual
     """
+    
+
     mut_indexes = random.sample(range(0, len(individual)), 2)
     individual[mut_indexes[0]], individual[mut_indexes[1]] = individual[mut_indexes[1]], individual[mut_indexes[0]]
     return individual

@@ -1,15 +1,15 @@
 from charles.charles import Population, Individual
 from charles.search import hill_climb, sim_annealing
-from charles.crossover import two_point_crossover, sbx, arithmetic_xo
+from charles.crossover import two_point_crossover, sbx, arithmetic_xo, single_point_co
 from charles.selection import tournament_sel, fps, rank_selection
-from charles.mutation import inversion_mutation, swap_mutation
+from charles.mutation import inversion_mutation, swap_mutation, uniform_mutation
 from data.data import nutrients, data
 from random import choices
 from copy import deepcopy
 import pandas as pd
 import numpy as np
 
-pop_size = 100
+pop_size = 50
 
 # Define the range of valid values for each quantity
 # valid_set = range(0,50)
@@ -163,7 +163,7 @@ pop = Population(
     optim=optim)
 
 pop.evolve(gens=100, select=tournament_sel, crossover=two_point_crossover,
-           xo_prob=0.9, elitism=True, mutate=inversion_mutation, mut_prob=0.1)
+           xo_prob=0.9, elitism=True, mutate=inversion_mutation, mut_prob=0.7)
 
 
 
