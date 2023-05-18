@@ -69,6 +69,9 @@ class Population:
             )
     def evolve(self, gens, xo_prob, select, crossover, elitism, mutate, mut_prob, stop_criteria=None):
 
+        prev_best_fitness = None
+        unchanged_generations = 0
+
         for i in range(gens):
             new_pop = []
 
@@ -111,19 +114,34 @@ class Population:
             self.individuals = new_pop
 
             if self.optim == "max":
-                print(f'Best Individual: {max(self, key=attrgetter("fitness"))}')
+                best_individual = max(self, key=attrgetter("fitness"))
+                print(f'Best Individual: {best_individual}')
+                current_best_fitness = best_individual.fitness
 
             elif self.optim == "min":
-                best=min(self, key=attrgetter("fitness"))
+                best_individual = min(self, key=attrgetter("fitness"))
                 print('')
-                print(f'Best Individual: {best}')
-                print(best.representation)
-                # print(best.get_cost())
+                print(f'Best Individual: {best_individual}')
+                print(best_individual.representation)
+                # print(best_individual.get_cost())
+                current_best_fitness = best_individual.fitness
 
             # Check if the stopping criterion has been met
             if stop_criteria is not None and i >= stop_criteria:
                 print(f"Stopping criteria met after {str(i+1)} generations")
                 break
+
+            # Check if the fitness remains the same
+            if prev_best_fitness is not None and current_best_fitness == prev_best_fitness:
+                unchanged_generations += 1
+            else:
+                unchanged_generations = 0
+
+            if unchanged_generations == 6:
+                print("Fitness remained the same for 6 generations. Stopping evolution.")
+                break
+
+            prev_best_fitness = current_best_fitness
 
     def __len__(self):
         return len(self.individuals)
