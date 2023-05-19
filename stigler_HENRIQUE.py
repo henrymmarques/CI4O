@@ -213,7 +213,6 @@ configurations = [
         "elitism": True,
         "mutate": inversion_mutation,
         "mut_prob": 0.4,
-        "stop_criteria": None
     },
     # {
     #     "gens": 50,
@@ -223,7 +222,6 @@ configurations = [
     #     "elitism": True,
     #     "mutate": uniform_mutation,
     #     "mut_prob": 0.9,
-    #     "stop_criteria": None
     # },
     {
         "gens": 50,
@@ -233,7 +231,6 @@ configurations = [
         "elitism": True,
         "mutate": uniform_mutation,
         "mut_prob": 1,
-        "stop_criteria": None
     },
     {
         "gens": 50,
@@ -243,7 +240,6 @@ configurations = [
         "elitism": True,
         "mutate": uniform_mutation,
         "mut_prob": 0.1,
-        "stop_criteria": None
     },
     {
         "gens": 50,
@@ -253,13 +249,8 @@ configurations = [
         "elitism": True,
         "mutate": uniform_mutation,
         "mut_prob": 0.5,
-        "stop_criteria": None
     }
 ]
 
 run_multiple_configurations(configurations)
 
-
-
-# if __name__ == '__main__':
-#   print(get_neighbours([10.49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3.46, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3.33, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11.45, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10.2, 0, 0, 0, 0, 0, 0, 11.39, 14.39, 0, 0, 0, 0, 0, 0, 0, 0, 13.8, 0, 0, 0, 0, 0, 0, 0, 0]))
