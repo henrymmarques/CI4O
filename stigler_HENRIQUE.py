@@ -157,18 +157,82 @@ def get_neighbours(self):
 Individual.get_fitness = get_fitness
 Individual.get_neighbours = get_neighbours
 
-pop = Population(
+# pop = Population(
+#     size=pop_size,
+#     sol_size=sol_size,
+#     valid_set=valid_set,
+#     replacement=True,
+#     optim=optim)
+
+# pop.evolve(gens=100, select=tournament_sel, crossover=two_point_crossover,
+#            xo_prob=0.9, elitism=True, mutate=uniform_mutation, mut_prob=0.7)
+# pop.evolve(gens=100, select=tournament_sel, crossover=two_point_crossover,
+#            xo_prob=0.9, elitism=True, mutate=inversion_mutation, mut_prob=0.7)
+
+#----------------------------------------------------------------------------------------------------------#
+
+
+def run_multiple_configurations(configurations):
+    all_fitness_values = []  # List to store fitness values for all configurations
+
+    for config in configurations:
+        pop = Population(
     size=pop_size,
     sol_size=sol_size,
     valid_set=valid_set,
     replacement=True,
     optim=optim)
+        fitness_values = pop.evolve(config["gens"], config["xo_prob"], config["select"], config["crossover"],
+                  config["elitism"], config["mutate"], config["mut_prob"], config["stop_criteria"])
 
-pop.evolve(gens=100, select=tournament_sel, crossover=two_point_crossover,
-           xo_prob=0.9, elitism=True, mutate=uniform_mutation, mut_prob=0.7)
-pop.evolve(gens=100, select=tournament_sel, crossover=two_point_crossover,
-           xo_prob=0.9, elitism=True, mutate=inversion_mutation, mut_prob=0.7)
+        all_fitness_values.append(fitness_values)  # Store the fitness values for this configuration
 
+    # Plot the fitness values for all configurations
+    for i, fitness_values in enumerate(all_fitness_values):
+        generation_numbers = range(1, len(fitness_values) + 1)
+        plt.plot(generation_numbers, fitness_values, label=f"Configuration {i+1}")
+         # Find the lowest fitness value and its index
+        lowest_fitness = min(fitness_values)
+        lowest_fitness_index = fitness_values.index(lowest_fitness)
+
+        # Add a text label for the lowest value
+        plt.text(len(fitness_values), lowest_fitness, f"Min: {lowest_fitness}", ha='right')
+
+    
+
+    plt.xlabel("Generation")
+    plt.ylabel("Fitness")
+    plt.title("Evolution Fitness Progress")
+    plt.legend()
+    plt.ylim(0, 250) 
+    plt.show()
+
+
+
+configurations = [
+    {
+        "gens": 50,
+        "xo_prob": 0.9,
+        "select": tournament_sel,
+        "crossover": two_point_crossover,
+        "elitism": True,
+        "mutate": uniform_mutation,
+        "mut_prob": 0.7,
+        "stop_criteria": None
+    },
+    {
+        "gens": 50,
+        "xo_prob": 0.6,
+        "select": tournament_sel,
+        "crossover": two_point_crossover,
+        "elitism": False,
+        "mutate": uniform_mutation,
+        "mut_prob": 0.3,
+        "stop_criteria": None
+    }
+]
+
+run_multiple_configurations(configurations)
 
 
 

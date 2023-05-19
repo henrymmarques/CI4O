@@ -137,23 +137,17 @@ class Population:
                 break
 
             # Check if the fitness remains the same
-            if prev_best_fitness is not None and current_best_fitness == prev_best_fitness:
-                unchanged_generations += 1
-            else:
-                unchanged_generations = 0
+            # if prev_best_fitness is not None and current_best_fitness == prev_best_fitness:
+            #     unchanged_generations += 1
+            # else:
+            #     unchanged_generations = 0
 
-            if unchanged_generations == 6:
-                print("Fitness remained the same for 6 generations. Stopping evolution.")
-                break
+            # if unchanged_generations == 6:
+            #     print("Fitness remained the same for 6 generations. Stopping evolution.")
+            #     break
 
             prev_best_fitness = current_best_fitness
-        # Plot the fitness values
-        generation_numbers = range(1, len(fitness_values) + 1)
-        plt.plot(generation_numbers, fitness_values)
-        plt.xlabel("Generation")
-        plt.ylabel("Fitness")
-        plt.title("Evolution Fitness Progress")
-        plt.show()
+        return fitness_values
 
     def __len__(self):
         return len(self.individuals)
