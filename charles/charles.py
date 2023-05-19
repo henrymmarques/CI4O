@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 num_selected=5
 
-def generate_individual(num_foods=77, num_selected=num_selected):
+def generate_individual(num_foods=74, num_selected=num_selected):
     # Select 5 unique food indices
     selected_indices = set()
     while len(selected_indices) < num_selected:
@@ -68,14 +68,18 @@ class Population:
                     valid_set=kwargs["valid_set"],
                 )
             )
-    def evolve(self, gens, xo_prob, select, crossover, elitism, mutate, mut_prob, stop_criteria=None):
-
-        prev_best_fitness = None
+    def evolve(self, gens, xo_prob, select, crossover, elitism, mutate, mut_prob, unchanged_stop=None):
+        '''
+        Args:
+        unchanged_stop: max of consecutive generatios with the same fitness
+        '''
+        prev_best_fitness = 0
         unchanged_generations = 0
+
 
         fitness_values = []  # List to store the fitness values
 
-        for i in range(gens):
+        for _ in range(gens):
             new_pop = []
 
             if elitism:
@@ -131,20 +135,16 @@ class Population:
 
             fitness_values.append(current_best_fitness)  # Store the best fitness value
 
-            # Check if the stopping criterion has been met
-            if stop_criteria is not None and i >= stop_criteria:
-                print(f"Stopping criteria met after {str(i+1)} generations")
-                break
+            if unchanged_stop is not None:
+                # Check if the fitness remains the same
+                if prev_best_fitness is not None and current_best_fitness == prev_best_fitness:
+                    unchanged_generations += 1
+                else:
+                    unchanged_generations = 0
 
-            # Check if the fitness remains the same
-            # if prev_best_fitness is not None and current_best_fitness == prev_best_fitness:
-            #     unchanged_generations += 1
-            # else:
-            #     unchanged_generations = 0
-
-            # if unchanged_generations == 6:
-            #     print("Fitness remained the same for 6 generations. Stopping evolution.")
-            #     break
+                if unchanged_generations == unchanged_stop:
+                    print("Fitness remained the same for " + str(unchanged_stop) + " generations. Stopping evolution.")
+                    break
 
             prev_best_fitness = current_best_fitness
         return fitness_values

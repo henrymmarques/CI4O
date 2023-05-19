@@ -123,8 +123,6 @@ def get_fitness(self):
         print('vitamin_C = ' + str(round(vitamin_C,3)))
         print('_____________________________________________')
     print('Fitness = ' + str(fitness))
-    # print('_____________________________________________')
-    # print('_____________________________________________')
     return fitness
 
 
@@ -164,10 +162,6 @@ pop = Population(
     replacement=True,
     optim=optim)
 
-#pop.evolve(gens=100, select=rank_selection, crossover=two_point_crossover,
-#           xo_prob=0.9, elitism=True, mutate=uniform_mutation, mut_prob=0.7)
-# pop.evolve(gens=100, select=tournament_sel, crossover=two_point_crossover,
-#            xo_prob=0.9, elitism=True, mutate=inversion_mutation, mut_prob=0.7)
 
 #----------------------------------------------------------------------------------------------------------#
 
@@ -183,7 +177,7 @@ def run_multiple_configurations(configurations):
     replacement=True,
     optim=optim)
         fitness_values = pop.evolve(config["gens"], config["xo_prob"], config["select"], config["crossover"],
-                  config["elitism"], config["mutate"], config["mut_prob"], config["stop_criteria"])
+                  config["elitism"], config["mutate"], config["mut_prob"])
 
         all_fitness_values.append(fitness_values)  # Store the fitness values for this configuration
         
@@ -213,12 +207,12 @@ def run_multiple_configurations(configurations):
 configurations = [
     {
         "gens": 50,
-        "xo_prob": 0.9,
+        "xo_prob": 0.4,
         "select": tournament_sel,
         "crossover": two_point_crossover,
         "elitism": True,
-        "mutate": uniform_mutation,
-        "mut_prob": 0.9,
+        "mutate": inversion_mutation,
+        "mut_prob": 0.4,
         "stop_criteria": None
     },
     # {

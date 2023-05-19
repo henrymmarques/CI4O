@@ -195,4 +195,4 @@ data = [
 # for i in range(len(nutrients)):
 #     print(nutrients[i][1])
 
-print(len(data))
+# print(len(data))
