@@ -196,7 +196,7 @@ def run_multiple_configurations(configurations):
         lowest_fitness_index = fitness_values.index(lowest_fitness)
 
         # Add a text label for the lowest value
-        plt.text(len(fitness_values), lowest_fitness, f"Min: {lowest_fitness}", ha='right')
+        plt.text(len(fitness_values), lowest_fitness, f"Min: {round(lowest_fitness,2)}", ha='right')
 
     
 
@@ -217,17 +217,47 @@ configurations = [
         "crossover": two_point_crossover,
         "elitism": True,
         "mutate": uniform_mutation,
-        "mut_prob": 0.7,
+        "mut_prob": 0.9,
+        "stop_criteria": None
+    },
+    # {
+    #     "gens": 50,
+    #     "xo_prob": 0.1,
+    #     "select": tournament_sel,
+    #     "crossover": two_point_crossover,
+    #     "elitism": True,
+    #     "mutate": uniform_mutation,
+    #     "mut_prob": 0.9,
+    #     "stop_criteria": None
+    # },
+    {
+        "gens": 50,
+        "xo_prob": 1,
+        "select": tournament_sel,
+        "crossover": two_point_crossover,
+        "elitism": True,
+        "mutate": uniform_mutation,
+        "mut_prob": 1,
         "stop_criteria": None
     },
     {
         "gens": 50,
-        "xo_prob": 0.6,
+        "xo_prob": 0.1,
         "select": tournament_sel,
         "crossover": two_point_crossover,
-        "elitism": False,
+        "elitism": True,
         "mutate": uniform_mutation,
-        "mut_prob": 0.3,
+        "mut_prob": 0.1,
+        "stop_criteria": None
+    },
+    {
+        "gens": 50,
+        "xo_prob": 0.5,
+        "select": tournament_sel,
+        "crossover": two_point_crossover,
+        "elitism": True,
+        "mutate": uniform_mutation,
+        "mut_prob": 0.5,
         "stop_criteria": None
     }
 ]
