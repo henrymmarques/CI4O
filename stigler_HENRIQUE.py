@@ -186,6 +186,7 @@ def run_multiple_configurations(configurations):
                   config["elitism"], config["mutate"], config["mut_prob"], config["stop_criteria"])
 
         all_fitness_values.append(fitness_values)  # Store the fitness values for this configuration
+        
 
     # Plot the fitness values for all configurations
     for i, fitness_values in enumerate(all_fitness_values):
