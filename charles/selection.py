@@ -80,13 +80,15 @@ def rank_selection(population, num_parents=20):
         ranked_population = sorted(population, key=lambda x: x.fitness, reverse=True)
     elif population.optim == 'min':
         ranked_population = sorted(population, key=lambda x: x.fitness)
+        print('ENTREI')
     else:
         raise ValueError("Invalid optimization type. Expected 'min' or 'max'.")
-
+    print(ranked_population)
     ranks = list(range(1, len(ranked_population) + 1))
-
+    #print(ranks)
     probabilities = [rank / sum(ranks) for rank in ranks]
-
-    selected_parents = choices(ranked_population, probabilities, k=num_parents)
-
+    #print(probabilities)
+    selected_parents = choices(ranked_population, probabilities, k=num_parents)[0]
+    print('Parents selecionados')
+    print(selected_parents)
     return selected_parents

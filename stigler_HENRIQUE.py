@@ -157,15 +157,15 @@ def get_neighbours(self):
 Individual.get_fitness = get_fitness
 Individual.get_neighbours = get_neighbours
 
-# pop = Population(
-#     size=pop_size,
-#     sol_size=sol_size,
-#     valid_set=valid_set,
-#     replacement=True,
-#     optim=optim)
+pop = Population(
+    size=pop_size,
+    sol_size=sol_size,
+    valid_set=valid_set,
+    replacement=True,
+    optim=optim)
 
-# pop.evolve(gens=100, select=tournament_sel, crossover=two_point_crossover,
-#            xo_prob=0.9, elitism=True, mutate=uniform_mutation, mut_prob=0.7)
+#pop.evolve(gens=100, select=rank_selection, crossover=two_point_crossover,
+#           xo_prob=0.9, elitism=True, mutate=uniform_mutation, mut_prob=0.7)
 # pop.evolve(gens=100, select=tournament_sel, crossover=two_point_crossover,
 #            xo_prob=0.9, elitism=True, mutate=inversion_mutation, mut_prob=0.7)
 

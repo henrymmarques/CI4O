@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 num_selected=5
 
-def generate_individual(num_foods=74, num_selected=num_selected):
+def generate_individual(num_foods=77, num_selected=num_selected):
     # Select 5 unique food indices
     selected_indices = set()
     while len(selected_indices) < num_selected:
