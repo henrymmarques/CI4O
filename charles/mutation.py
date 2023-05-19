@@ -5,7 +5,7 @@ def uniform_mutation(individual):
     for i in range(len(individual)):
         lower_bound= individual[i] - individual[i]*0.1
         upper_bound= individual[i] + individual[i]*0.1
-        individual[i] = random.uniform(lower_bound, upper_bound)
+        individual[i] = round(random.uniform(lower_bound, upper_bound), 3)
     return individual
 
 def swap_mutation(individual):

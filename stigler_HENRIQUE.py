@@ -9,6 +9,8 @@ from copy import deepcopy
 import pandas as pd
 import numpy as np
 
+import matplotlib.pyplot as plt
+
 pop_size = 50
 
 # Define the range of valid values for each quantity
@@ -163,8 +165,9 @@ pop = Population(
     optim=optim)
 
 pop.evolve(gens=100, select=tournament_sel, crossover=two_point_crossover,
+           xo_prob=0.9, elitism=True, mutate=uniform_mutation, mut_prob=0.7)
+pop.evolve(gens=100, select=tournament_sel, crossover=two_point_crossover,
            xo_prob=0.9, elitism=True, mutate=inversion_mutation, mut_prob=0.7)
-
 
 
 

@@ -1,6 +1,7 @@
 import random
 from operator import attrgetter
 from copy import deepcopy
+import matplotlib.pyplot as plt
 
 num_selected=5
 
@@ -72,6 +73,8 @@ class Population:
         prev_best_fitness = None
         unchanged_generations = 0
 
+        fitness_values = []  # List to store the fitness values
+
         for i in range(gens):
             new_pop = []
 
@@ -126,6 +129,8 @@ class Population:
                 # print(best_individual.get_cost())
                 current_best_fitness = best_individual.fitness
 
+            fitness_values.append(current_best_fitness)  # Store the best fitness value
+
             # Check if the stopping criterion has been met
             if stop_criteria is not None and i >= stop_criteria:
                 print(f"Stopping criteria met after {str(i+1)} generations")
@@ -142,6 +147,13 @@ class Population:
                 break
 
             prev_best_fitness = current_best_fitness
+        # Plot the fitness values
+        generation_numbers = range(1, len(fitness_values) + 1)
+        plt.plot(generation_numbers, fitness_values)
+        plt.xlabel("Generation")
+        plt.ylabel("Fitness")
+        plt.title("Evolution Fitness Progress")
+        plt.show()
 
     def __len__(self):
         return len(self.individuals)
