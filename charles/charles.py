@@ -68,7 +68,7 @@ class Population:
                     valid_set=kwargs["valid_set"],
                 )
             )
-    def evolve(self, gens, xo_prob, select, crossover, elitism, mutate, mut_prob, unchanged_stop=None):
+    def evolve(self, gens, xo_prob, select, crossover, elitism, mutate, mut_prob, unchanged_stop=None, printable=True):
         '''
         Args:
         unchanged_stop: max of consecutive generatios with the same fitness
@@ -122,16 +122,18 @@ class Population:
 
             if self.optim == "max":
                 best_individual = max(self, key=attrgetter("fitness"))
-                print(f'Best Individual: {best_individual}')
                 current_best_fitness = best_individual.fitness
+                if printable:
+                    print(f'Best Individual: {best_individual}')
 
             elif self.optim == "min":
                 best_individual = min(self, key=attrgetter("fitness"))
-                print('')
-                print(f'Best Individual: {best_individual}')
-                print(best_individual.representation)
-                # print(best_individual.get_cost())
                 current_best_fitness = best_individual.fitness
+                if printable:
+                    print('')
+                    print(f'Best Individual: {best_individual}')
+                    print(best_individual.representation)
+                    # print(best_individual.get_cost())
 
             fitness_values.append(current_best_fitness)  # Store the best fitness value
 

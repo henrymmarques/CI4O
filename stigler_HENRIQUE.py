@@ -8,22 +8,29 @@ from random import choices
 from copy import deepcopy
 import pandas as pd
 import numpy as np
-
+import time
 import matplotlib.pyplot as plt
 
+#Define population size (number of individuals)
 pop_size = 50
 
 # Define the range of valid values for each quantity
-# valid_set = range(0,50)
 valid_set = range(0,len(data))
 
-foods = [food[2:] for food in data]
+#define solution size
 sol_size=len(data)
+
+#define optimization type
 optim="min"
 
-def get_fitness(self):
-    print(f"Individual : {self.representation}")
 
+# Calculate an individual's fitness value (based on the sum of the amount of money spent on each food item)
+# Printable argument is set to false when running epochs in order to don't see too many prints
+def get_fitness(self, printable=False):
+    if printable:
+        print(f"Individual : {self.representation}")
+    # Define nutritional variables (to check and evaluate if solutions are enought to cover nutritional needs) and also defines
+    # fitness and total cost variables.
     fitness = 0
     total_cost = 0
     calories = 0
@@ -36,11 +43,13 @@ def get_fitness(self):
     vitamin_C = 0
     niacin = 0
     all_satisfied=True
+    # Iterate over each food item
     for i, food in enumerate(data):
         if self.representation[i] > 0:
             
             total_cost += self.representation[i]
 
+            # Calculate the total nutritional values based on the amount spent on each food item
             calories += self.representation[i] * food[3]
             protein += self.representation[i] * food[4]
             calcium += self.representation[i] * food[5]
@@ -50,61 +59,47 @@ def get_fitness(self):
             vitamin_B2 += self.representation[i] * food[9] 
             niacin += self.representation[i] * food[10] 
             vitamin_C += self.representation[i] * food[11]
-            fitness=total_cost
 
+            fitness=total_cost # Set fitness as the total cost
+
+    # Check if the nutritional requirements are satisfied for yearly values (obtained by multiplying daily values for the number of days that a year has)
     if calories < nutrients[0][1]*365:
         fitness += nutrients[0][1]*365 - calories
-        all_satisfied=False
-        # print('Calories not sufficient')
-        # print(calories, nutrients[0][1]*365)
+        all_satisfied=False #all_satified is defined as False in case any of the requirements is not satisfied)
+
     if protein < nutrients[1][1]*365:
         fitness += nutrients[1][1]*365 - protein
-        all_satisfied=False        
-        # print('Protein not sufficient')
-        # print(protein, nutrients[1][1]*365)
+        all_satisfied=False     
+
     if calcium < nutrients[2][1]*365:
         fitness += nutrients[2][1]*365 - calcium
         all_satisfied=False
-        # print('Calcium not sufficient')
-        # print(calcium, nutrients[2][1]*365)
 
     if iron < nutrients[3][1]*365:
         fitness += nutrients[3][1]*365 - iron
         all_satisfied=False
-        # print('Iron not sufficient')
-        # print(iron, nutrients[3][1]*365)
 
     if vitamin_A < nutrients[4][1]*365:
         fitness += nutrients[4][1]*365 - vitamin_A
         all_satisfied=False
-        # print('Vitamin A not sufficient')
-        # print(vitamin_A, nutrients[4][1]*365)
 
     if vitamin_B1 < nutrients[5][1]*365:
         fitness += nutrients[5][1]*365 - vitamin_B1
         all_satisfied=False
-        # print('Vitamin B1 not sufficient')
-        # print(vitamin_B1, nutrients[5][1]*365)
 
     if vitamin_B2 < nutrients[6][1]*365:
         fitness += nutrients[6][1]*365 - vitamin_B2
         all_satisfied=False
-        # print('Vitamin B2 not sufficient')
-        # print(vitamin_B2, nutrients[6][1]*365)
 
     if niacin < nutrients[7][1]*365:
         fitness += nutrients[7][1]*365 - niacin
         all_satisfied=False
-        # print('Niacin not sufficient')
-        # print(niacin, nutrients[7][1]*365)
 
     if vitamin_C < nutrients[8][1]*365:
         fitness += nutrients[8][1]*365 - vitamin_C
         all_satisfied=False
-        # print('Vitamin C not sufficient')
-        # print(vitamin_C, nutrients[8][1]*365)
 
-    if all_satisfied==True:
+    if all_satisfied and printable:
         print('##############################################################')
         print('________________________ALL SATISFIED______________________')
         print('##############################################################')
@@ -122,7 +117,8 @@ def get_fitness(self):
         print('niacin = ' + str(round(niacin,3)))
         print('vitamin_C = ' + str(round(vitamin_C,3)))
         print('_____________________________________________')
-    print('Fitness = ' + str(fitness))
+    if printable:
+        print('Fitness = ' + str(fitness))
     return fitness
 
 
@@ -155,6 +151,7 @@ def get_neighbours(self):
 Individual.get_fitness = get_fitness
 Individual.get_neighbours = get_neighbours
 
+#Create a population variable
 pop = Population(
     size=pop_size,
     sol_size=sol_size,
@@ -166,10 +163,21 @@ pop = Population(
 #----------------------------------------------------------------------------------------------------------#
 
 
-def run_multiple_configurations(configurations, epochs=None):
+def run_multiple_configurations(configurations, epochs=None, printable=True):
+    """function to run population evolution over a list of configurations 
+
+    Args:
+        configurations: List of dictionaries configurations
+        epochs: define if it is called inside the run_epochs function. If false prints a plot
+        printable: boolean to define if it prints
+
+    Returns:
+        fit_list: list of the size of the configurations list, containing the best fitness for each configuration
+    """
+
     all_fitness_values = []  # List to store fitness values for all configurations
 
-    for config in configurations:
+    for config in configurations: #Iterate over a set of configurations
         pop = Population(
             size=pop_size,
             sol_size=sol_size,
@@ -178,7 +186,7 @@ def run_multiple_configurations(configurations, epochs=None):
             optim=optim
         )
         fitness_values = pop.evolve(config["gens"], config["xo_prob"], config["select"], config["crossover"],
-                                    config["elitism"], config["mutate"], config["mut_prob"])
+                                    config["elitism"], config["mutate"], config["mut_prob"], printable=printable)
 
         all_fitness_values.append(fitness_values)  # Store the fitness values for this configuration
 
@@ -189,7 +197,6 @@ def run_multiple_configurations(configurations, epochs=None):
             plt.plot(generation_numbers, fitness_values, label=f"Configuration {i+1}")
             # Find the lowest fitness value and its index
             lowest_fitness = min(fitness_values)
-            lowest_fitness_index = fitness_values.index(lowest_fitness)
 
             # Add a text label for the lowest value
             plt.text(len(fitness_values), lowest_fitness, f"Min: {round(lowest_fitness, 2)}", ha='right')
@@ -201,55 +208,74 @@ def run_multiple_configurations(configurations, epochs=None):
         plt.show()
         return
 
-    fit_list = [min(fitness_values) for fitness_values in all_fitness_values]
+    fit_list = [min(fitness_values) for fitness_values in all_fitness_values] #List with the minimum fitness values
     return fit_list
 
 
 def run_epochs(numb_epochs):
-    best_list = []
-    for _ in range(numb_epochs):
-        best_list.append(run_multiple_configurations(configurations=configurations, epochs=True))
-    best_list = np.array(best_list)
-    mean_values = np.mean(best_list, axis=0)
-    print(best_list)
+    """function to run n epochs using the run_multiple_configurations function
+
+    Args:
+        numb_epochs: number of epochs
+
+    Returns:
+        mean_values: list of the mean values of all best fitness for each configuration
+    """
+    best_list = [] # List to store the best fitness values for each epoch
+    start_time = time.time()  # Start time for the epochs
+
+    for epoch in range(1, numb_epochs + 1):
+        epoch_start_time = time.time()  # Start time for the current epoch
+        best_list.append(run_multiple_configurations(configurations=configurations, epochs=True, printable=False))
+        epoch_elapsed_time = time.time() - epoch_start_time  # Elapsed time for the current epoch
+
+        # Estimate remaining time based on the average elapsed time
+        average_elapsed_time = (time.time() - start_time) / epoch  # Average elapsed time per epoch
+        remaining_epochs = numb_epochs - epoch
+        remaining_time = remaining_epochs * average_elapsed_time
+
+        print(f"Epoch {epoch}/{numb_epochs} completed. Estimated time remaining: {remaining_time:.2f} seconds")
+
+    best_list = np.array(best_list) # Convert best_list to a numpy array
+    mean_values = np.mean(best_list, axis=0) # Calculate the mean of the best fitness values of all epochs
     return print(mean_values)
 
+#----------------------------------------------------------------------------------------------------------#
 
-
-
+# Create a set of configurations
 configurations = [
     {
-        "gens": 10,
-        "xo_prob": 0.4,
+        "gens": 100,
+        "xo_prob": 0.8,
         "select": tournament_sel,
-        "crossover": single_point_co,
+        "crossover": two_point_crossover,
         "elitism": True,
         "mutate": inversion_mutation,
-        "mut_prob": 0.4,
+        "mut_prob": 0.7,
     },
    {
-        "gens": 10,
-        "xo_prob": 0.4,
+        "gens": 100,
+        "xo_prob": 0.8,
         "select": rank_selection,
-        "crossover": single_point_co,
+        "crossover": two_point_crossover,
         "elitism": True,
         "mutate": inversion_mutation,
-        "mut_prob": 0.4,
+        "mut_prob": 0.7,
     },
    {
-        "gens": 10,
-        "xo_prob": 0.4,
+        "gens": 100,
+        "xo_prob": 0.8,
         "select": fps,
-        "crossover": single_point_co,
+        "crossover": two_point_crossover,
         "elitism": True,
         "mutate": inversion_mutation,
-        "mut_prob": 0.4,
+        "mut_prob": 0.7,
     },
 ]
 
 
 ''' TO RUN EPOCHS'''
-run_epochs(3)
+run_epochs(30)
 
 '''TO RUN A SINGLE EPOCH WITH A PLOT'''
 # run_multiple_configurations(configurations, epochs=True)
