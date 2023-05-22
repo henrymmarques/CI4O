@@ -206,10 +206,28 @@ def run_multiple_configurations(configurations):
 
 configurations = [
     {
-        "gens": 50,
+        "gens": 100,
         "xo_prob": 0.4,
         "select": tournament_sel,
-        "crossover": two_point_crossover,
+        "crossover": single_point_co,
+        "elitism": True,
+        "mutate": inversion_mutation,
+        "mut_prob": 0.4,
+    },
+   {
+        "gens": 100,
+        "xo_prob": 0.4,
+        "select": rank_selection,
+        "crossover": single_point_co,
+        "elitism": True,
+        "mutate": inversion_mutation,
+        "mut_prob": 0.4,
+    },
+   {
+        "gens": 100,
+        "xo_prob": 0.4,
+        "select": fps,
+        "crossover": single_point_co,
         "elitism": True,
         "mutate": inversion_mutation,
         "mut_prob": 0.4,
@@ -221,35 +239,17 @@ configurations = [
     #     "crossover": two_point_crossover,
     #     "elitism": True,
     #     "mutate": uniform_mutation,
-    #     "mut_prob": 0.9,
+    #     "mut_prob": 0.1,
     # },
-    {
-        "gens": 50,
-        "xo_prob": 1,
-        "select": tournament_sel,
-        "crossover": two_point_crossover,
-        "elitism": True,
-        "mutate": uniform_mutation,
-        "mut_prob": 1,
-    },
-    {
-        "gens": 50,
-        "xo_prob": 0.1,
-        "select": tournament_sel,
-        "crossover": two_point_crossover,
-        "elitism": True,
-        "mutate": uniform_mutation,
-        "mut_prob": 0.1,
-    },
-    {
-        "gens": 50,
-        "xo_prob": 0.5,
-        "select": tournament_sel,
-        "crossover": two_point_crossover,
-        "elitism": True,
-        "mutate": uniform_mutation,
-        "mut_prob": 0.5,
-    }
+    # {
+    #     "gens": 50,
+    #     "xo_prob": 0.5,
+    #     "select": tournament_sel,
+    #     "crossover": two_point_crossover,
+    #     "elitism": True,
+    #     "mutate": uniform_mutation,
+    #     "mut_prob": 0.5,
+    # }
 ]
 
 run_multiple_configurations(configurations)

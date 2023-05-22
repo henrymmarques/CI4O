@@ -85,6 +85,7 @@ def rank_selection(population, num_parents=20):
     ranks = list(range(1, len(ranked_population) + 1))
     #print(ranks)
     probabilities = [rank / sum(ranks) for rank in ranks]
+    probabilities=probabilities[::-1]
     #print(probabilities)
     selected_parents = choices(ranked_population, probabilities, k=num_parents)[0]
     return selected_parents
