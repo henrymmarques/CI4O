@@ -15,7 +15,7 @@ def generate_individual(num_foods=77, num_selected=num_selected):
     # Generate random quantities for the selected foods
     individual = [0] * num_foods
     for i in selected_indices:
-        individual[i] = random.randint(100, 1500) / 100.0  # Generate a random quantity between 0.01 and 10.00
+        individual[i] = random.randint(100, 1500) / 100.0  # Generate a random quantity between 1 and 15.00
 
     return individual
 
