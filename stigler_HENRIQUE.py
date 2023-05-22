@@ -166,47 +166,60 @@ pop = Population(
 #----------------------------------------------------------------------------------------------------------#
 
 
-def run_multiple_configurations(configurations):
+def run_multiple_configurations(configurations, epochs=None):
     all_fitness_values = []  # List to store fitness values for all configurations
 
     for config in configurations:
         pop = Population(
-    size=pop_size,
-    sol_size=sol_size,
-    valid_set=valid_set,
-    replacement=True,
-    optim=optim)
+            size=pop_size,
+            sol_size=sol_size,
+            valid_set=valid_set,
+            replacement=True,
+            optim=optim
+        )
         fitness_values = pop.evolve(config["gens"], config["xo_prob"], config["select"], config["crossover"],
-                  config["elitism"], config["mutate"], config["mut_prob"])
+                                    config["elitism"], config["mutate"], config["mut_prob"])
 
         all_fitness_values.append(fitness_values)  # Store the fitness values for this configuration
-        
 
-    # Plot the fitness values for all configurations
-    for i, fitness_values in enumerate(all_fitness_values):
-        generation_numbers = range(1, len(fitness_values) + 1)
-        plt.plot(generation_numbers, fitness_values, label=f"Configuration {i+1}")
-         # Find the lowest fitness value and its index
-        lowest_fitness = min(fitness_values)
-        lowest_fitness_index = fitness_values.index(lowest_fitness)
+    if epochs is False:
+        # Plot the fitness values for all configurations
+        for i, fitness_values in enumerate(all_fitness_values):
+            generation_numbers = range(1, len(fitness_values) + 1)
+            plt.plot(generation_numbers, fitness_values, label=f"Configuration {i+1}")
+            # Find the lowest fitness value and its index
+            lowest_fitness = min(fitness_values)
+            lowest_fitness_index = fitness_values.index(lowest_fitness)
 
-        # Add a text label for the lowest value
-        plt.text(len(fitness_values), lowest_fitness, f"Min: {round(lowest_fitness,2)}", ha='right')
+            # Add a text label for the lowest value
+            plt.text(len(fitness_values), lowest_fitness, f"Min: {round(lowest_fitness, 2)}", ha='right')
+        plt.xlabel("Generation")
+        plt.ylabel("Fitness")
+        plt.title("Evolution Fitness Progress")
+        plt.legend()
+        plt.ylim(0, 250)
+        plt.show()
+        return
 
-    
+    fit_list = [min(fitness_values) for fitness_values in all_fitness_values]
+    return fit_list
 
-    plt.xlabel("Generation")
-    plt.ylabel("Fitness")
-    plt.title("Evolution Fitness Progress")
-    plt.legend()
-    plt.ylim(0, 250) 
-    plt.show()
+
+def run_epochs(numb_epochs):
+    best_list = []
+    for _ in range(numb_epochs):
+        best_list.append(run_multiple_configurations(configurations=configurations, epochs=True))
+    best_list = np.array(best_list)
+    mean_values = np.mean(best_list, axis=0)
+    print(best_list)
+    return print(mean_values)
+
 
 
 
 configurations = [
     {
-        "gens": 100,
+        "gens": 10,
         "xo_prob": 0.4,
         "select": tournament_sel,
         "crossover": single_point_co,
@@ -215,7 +228,7 @@ configurations = [
         "mut_prob": 0.4,
     },
    {
-        "gens": 100,
+        "gens": 10,
         "xo_prob": 0.4,
         "select": rank_selection,
         "crossover": single_point_co,
@@ -224,7 +237,7 @@ configurations = [
         "mut_prob": 0.4,
     },
    {
-        "gens": 100,
+        "gens": 10,
         "xo_prob": 0.4,
         "select": fps,
         "crossover": single_point_co,
@@ -232,25 +245,12 @@ configurations = [
         "mutate": inversion_mutation,
         "mut_prob": 0.4,
     },
-    # {
-    #     "gens": 50,
-    #     "xo_prob": 0.1,
-    #     "select": tournament_sel,
-    #     "crossover": two_point_crossover,
-    #     "elitism": True,
-    #     "mutate": uniform_mutation,
-    #     "mut_prob": 0.1,
-    # },
-    # {
-    #     "gens": 50,
-    #     "xo_prob": 0.5,
-    #     "select": tournament_sel,
-    #     "crossover": two_point_crossover,
-    #     "elitism": True,
-    #     "mutate": uniform_mutation,
-    #     "mut_prob": 0.5,
-    # }
 ]
 
-run_multiple_configurations(configurations)
+
+''' TO RUN EPOCHS'''
+run_epochs(3)
+
+'''TO RUN A SINGLE EPOCH WITH A PLOT'''
+# run_multiple_configurations(configurations, epochs=True)
 
