@@ -261,30 +261,30 @@ def run_epochs(numb_epochs):
 configurations = [
     {
         "gens": 100,
-        "xo_prob": 0.8,
+        "xo_prob": 0.5,
         "select": tournament_sel,
         "crossover": two_point_crossover,
         "elitism": True,
         "mutate": inversion_mutation,
-        "mut_prob": 0.7,
+        "mut_prob": 0.5,
     },
    {
         "gens": 100,
-        "xo_prob": 0.8,
+        "xo_prob": 0.5,
         "select": rank_selection,
         "crossover": two_point_crossover,
         "elitism": True,
         "mutate": inversion_mutation,
-        "mut_prob": 0.7,
+        "mut_prob": 0.5,
     },
    {
         "gens": 100,
-        "xo_prob": 0.8,
+        "xo_prob": 0.5,
         "select": fps,
         "crossover": two_point_crossover,
         "elitism": True,
         "mutate": inversion_mutation,
-        "mut_prob": 0.7,
+        "mut_prob": 0.5,
     },
 ]
 
@@ -293,5 +293,5 @@ configurations = [
 run_epochs(30)
 
 '''TO RUN A SINGLE EPOCH WITH A PLOT'''
-# run_multiple_configurations(configurations, epochs=False, printable=True)
+run_multiple_configurations(configurations, epochs=False, printable=False)
 
