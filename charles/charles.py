@@ -72,15 +72,16 @@ class Population:
         '''
         Args:
         unchanged_stop: max of consecutive generatios with the same fitness
+        printable: boolean to define if it prints
         '''
-        prev_best_fitness = 0
-        unchanged_generations = 0
+        prev_best_fitness = 0 #Previous best fitness value
+        unchanged_generations = 0 # Number of consecutive generations with same fitness value
 
 
         fitness_values = []  # List to store the fitness values
 
         for _ in range(gens):
-            new_pop = []
+            new_pop = [] # List that will store the new population
 
             if elitism:
                 if self.optim == "max":
@@ -137,18 +138,17 @@ class Population:
 
             fitness_values.append(current_best_fitness)  # Store the best fitness value
 
-            if unchanged_stop is not None:
-                # Check if the fitness remains the same
-                if prev_best_fitness is not None and current_best_fitness == prev_best_fitness:
+            if unchanged_stop is not None: # Condition that check if he parameter "unchanged_stop" received a value different than None
+                if prev_best_fitness is not None and current_best_fitness == prev_best_fitness: # Check if the fitness remains the same
                     unchanged_generations += 1
                 else:
                     unchanged_generations = 0
 
-                if unchanged_generations == unchanged_stop:
+                if unchanged_generations == unchanged_stop: # Check if the count of unchanged generations reaches the specified threshold
                     print("Fitness remained the same for " + str(unchanged_stop) + " generations. Stopping evolution.")
-                    break
+                    break  # Stop evolve function
 
-            prev_best_fitness = current_best_fitness
+            prev_best_fitness = current_best_fitness # Updates the previous best fitness value with the current best value
         return fitness_values
 
     def __len__(self):
