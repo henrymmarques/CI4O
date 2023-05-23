@@ -176,8 +176,13 @@ def run_multiple_configurations(configurations, epochs=None, printable=True):
     """
 
     all_fitness_values = []  # List to store fitness values for all configurations
+    selection_types = []  # List to store selection types for labeling
+    plt.figure(figsize=(10,6))
 
     for config in configurations: #Iterate over a set of configurations
+        selection_type = config["select"]  # Get the selection type from the configuration
+        selection_types.append(selection_type)  # Store the selection type for labeling
+
         pop = Population(
             size=pop_size,
             sol_size=sol_size,
@@ -194,7 +199,7 @@ def run_multiple_configurations(configurations, epochs=None, printable=True):
         # Plot the fitness values for all configurations
         for i, fitness_values in enumerate(all_fitness_values):
             generation_numbers = range(1, len(fitness_values) + 1)
-            plt.plot(generation_numbers, fitness_values, label=f"Configuration {i+1}")
+            plt.plot(generation_numbers, fitness_values, label=create_labels(configurations[i]))  # Set the label as the selection type
             # Find the lowest fitness value and its index
             lowest_fitness = min(fitness_values)
 
@@ -210,6 +215,16 @@ def run_multiple_configurations(configurations, epochs=None, printable=True):
 
     fit_list = [min(fitness_values) for fitness_values in all_fitness_values] #List with the minimum fitness values
     return fit_list
+
+
+def create_labels(config):
+    '''
+    creates personalized label given a configuration
+    '''
+
+    label = "SEL: " + config['select'].__name__ + " | XO: " + config['crossover'].__name__ + '(' + str(config['xo_prob']) + ')' \
+            + " | MUT: " + config['mutate'].__name__ + '(' + str(config['mut_prob']) + ')'
+    return label
 
 
 def run_epochs(numb_epochs):
@@ -250,7 +265,7 @@ configurations = [
         "select": tournament_sel,
         "crossover": two_point_crossover,
         "elitism": True,
-        "mutate": inversion_mutation,
+        "mutate": uniform_mutation,
         "mut_prob": 0.7,
     },
    {
@@ -259,7 +274,7 @@ configurations = [
         "select": rank_selection,
         "crossover": two_point_crossover,
         "elitism": True,
-        "mutate": inversion_mutation,
+        "mutate": uniform_mutation,
         "mut_prob": 0.7,
     },
    {
@@ -268,15 +283,15 @@ configurations = [
         "select": fps,
         "crossover": two_point_crossover,
         "elitism": True,
-        "mutate": inversion_mutation,
+        "mutate": uniform_mutation,
         "mut_prob": 0.7,
     },
 ]
 
 
 ''' TO RUN EPOCHS'''
-run_epochs(30)
+# run_epochs(30)
 
 '''TO RUN A SINGLE EPOCH WITH A PLOT'''
-# run_multiple_configurations(configurations, epochs=True)
+run_multiple_configurations(configurations, epochs=False, printable=True)
 
