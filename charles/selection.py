@@ -41,7 +41,7 @@ def fps(population):
         raise Exception("No optimization specified (min or max).")
     
 ## estava size=4
-def tournament_sel(population, size=20):
+def tournament_sel(population, size=15):
     """Tournament selection implementation.
 
     Args:
@@ -65,7 +65,7 @@ def tournament_sel(population, size=20):
         return min(tournament, key=attrgetter("fitness"))
     
 
-def rank_selection(population, num_parents=20):
+def rank_selection(population, num_parents=100):
     """Rank selection implementation
 
     Args:

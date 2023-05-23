@@ -177,7 +177,6 @@ def run_multiple_configurations(configurations, epochs=None, printable=True):
 
     all_fitness_values = []  # List to store fitness values for all configurations
     selection_types = []  # List to store selection types for labeling
-    plt.figure(figsize=(10,6))
 
     for config in configurations: #Iterate over a set of configurations
         selection_type = config["select"]  # Get the selection type from the configuration
@@ -196,6 +195,7 @@ def run_multiple_configurations(configurations, epochs=None, printable=True):
         all_fitness_values.append(fitness_values)  # Store the fitness values for this configuration
 
     if epochs is False:
+        plt.figure(figsize=(10,6))
         # Plot the fitness values for all configurations
         for i, fitness_values in enumerate(all_fitness_values):
             generation_numbers = range(1, len(fitness_values) + 1)
@@ -265,7 +265,7 @@ configurations = [
         "select": tournament_sel,
         "crossover": two_point_crossover,
         "elitism": True,
-        "mutate": uniform_mutation,
+        "mutate": inversion_mutation,
         "mut_prob": 0.7,
     },
    {
@@ -274,7 +274,7 @@ configurations = [
         "select": rank_selection,
         "crossover": two_point_crossover,
         "elitism": True,
-        "mutate": uniform_mutation,
+        "mutate": inversion_mutation,
         "mut_prob": 0.7,
     },
    {
@@ -283,15 +283,15 @@ configurations = [
         "select": fps,
         "crossover": two_point_crossover,
         "elitism": True,
-        "mutate": uniform_mutation,
+        "mutate": inversion_mutation,
         "mut_prob": 0.7,
     },
 ]
 
 
 ''' TO RUN EPOCHS'''
-# run_epochs(30)
+run_epochs(30)
 
 '''TO RUN A SINGLE EPOCH WITH A PLOT'''
-run_multiple_configurations(configurations, epochs=False, printable=True)
+# run_multiple_configurations(configurations, epochs=False, printable=True)
 
