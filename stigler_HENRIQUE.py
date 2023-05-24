@@ -241,7 +241,9 @@ def run_epochs(numb_epochs):
 
     for epoch in range(1, numb_epochs + 1):
         epoch_start_time = time.time()  # Start time for the current epoch
-        best_list.append(run_multiple_configurations(configurations=configurations, epochs=True, printable=False))
+        values=run_multiple_configurations(configurations=configurations, epochs=True, printable=False)
+        best_list.append(values)
+        print(values)
         epoch_elapsed_time = time.time() - epoch_start_time  # Elapsed time for the current epoch
 
         # Estimate remaining time based on the average elapsed time
@@ -261,30 +263,57 @@ def run_epochs(numb_epochs):
 configurations = [
     {
         "gens": 100,
-        "xo_prob": 0.5,
+        "xo_prob": 0.9,
+        "select": tournament_sel,
+        "crossover": single_point_co,
+        "elitism": True,
+        "mutate": uniform_mutation,
+        "mut_prob": 0.9,
+    },
+   {
+        "gens": 100,
+        "xo_prob": 0.9,
+        "select": tournament_sel,
+        "crossover": single_point_co,
+        "elitism": True,
+        "mutate": uniform_mutation,
+        "mut_prob": 0.7,
+    },
+   {
+        "gens": 100,
+        "xo_prob": 0.2,
+        "select": tournament_sel,
+        "crossover": single_point_co,
+        "elitism": True,
+        "mutate": uniform_mutation,
+        "mut_prob": 0.6,
+    },
+     {
+        "gens": 100,
+        "xo_prob": 0.9,
+        "select": tournament_sel,
+        "crossover": two_point_crossover,
+        "elitism": True,
+        "mutate": uniform_mutation,
+        "mut_prob": 0.9,
+    },
+   {
+        "gens": 100,
+        "xo_prob": 0.9,
+        "select": tournament_sel,
+        "crossover": two_point_crossover,
+        "elitism": True,
+        "mutate": uniform_mutation,
+        "mut_prob": 0.7,
+    },
+   {
+        "gens": 100,
+        "xo_prob": 0.2,
         "select": tournament_sel,
         "crossover": two_point_crossover,
         "elitism": True,
         "mutate": inversion_mutation,
-        "mut_prob": 0.5,
-    },
-   {
-        "gens": 100,
-        "xo_prob": 0.5,
-        "select": rank_selection,
-        "crossover": two_point_crossover,
-        "elitism": True,
-        "mutate": inversion_mutation,
-        "mut_prob": 0.5,
-    },
-   {
-        "gens": 100,
-        "xo_prob": 0.5,
-        "select": fps,
-        "crossover": two_point_crossover,
-        "elitism": True,
-        "mutate": inversion_mutation,
-        "mut_prob": 0.5,
+        "mut_prob": 0.6,
     },
 ]
 
