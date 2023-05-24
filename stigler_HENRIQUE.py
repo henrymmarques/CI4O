@@ -4,7 +4,7 @@ from charles.crossover import two_point_crossover, sbx, arithmetic_xo, single_po
 from charles.selection import tournament_sel, fps, rank_selection
 from charles.mutation import inversion_mutation, swap_mutation, uniform_mutation
 from data.data import nutrients, data
-from random import choices
+import random
 from copy import deepcopy
 import pandas as pd
 import numpy as np
@@ -263,63 +263,73 @@ def run_epochs(numb_epochs):
 configurations = [
     {
         "gens": 100,
-        "xo_prob": 0.9,
-        "select": tournament_sel,
-        "crossover": single_point_co,
-        "elitism": True,
-        "mutate": uniform_mutation,
-        "mut_prob": 0.9,
-    },
-   {
-        "gens": 100,
-        "xo_prob": 0.9,
-        "select": tournament_sel,
-        "crossover": single_point_co,
-        "elitism": True,
-        "mutate": uniform_mutation,
-        "mut_prob": 0.7,
-    },
-   {
-        "gens": 100,
-        "xo_prob": 0.2,
-        "select": tournament_sel,
-        "crossover": single_point_co,
-        "elitism": True,
-        "mutate": uniform_mutation,
-        "mut_prob": 0.6,
-    },
-     {
-        "gens": 100,
-        "xo_prob": 0.9,
+        "xo_prob": 1,
         "select": tournament_sel,
         "crossover": two_point_crossover,
-        "elitism": True,
-        "mutate": uniform_mutation,
-        "mut_prob": 0.9,
+        "elitism": False,
+        "mutate": inversion_mutation,
+        "mut_prob": 1,
     },
-   {
+    {
         "gens": 100,
-        "xo_prob": 0.9,
+        "xo_prob": 0.6,
         "select": tournament_sel,
         "crossover": two_point_crossover,
-        "elitism": True,
-        "mutate": uniform_mutation,
-        "mut_prob": 0.7,
-    },
-   {
-        "gens": 100,
-        "xo_prob": 0.2,
-        "select": tournament_sel,
-        "crossover": two_point_crossover,
-        "elitism": True,
+        "elitism": False,
         "mutate": inversion_mutation,
         "mut_prob": 0.6,
     },
+    {
+        "gens": 100,
+        "xo_prob": 0.3,
+        "select": tournament_sel,
+        "crossover": two_point_crossover,
+        "elitism": False,
+        "mutate": inversion_mutation,
+        "mut_prob": 0.3,
+    },
+    {
+        "gens": 100,
+        "xo_prob": 0.9,
+        "select": tournament_sel,
+        "crossover": two_point_crossover,
+        "elitism": False,
+        "mutate": inversion_mutation,
+        "mut_prob": 0.3,
+    },
+    {
+        "gens": 100,
+        "xo_prob": 0.3,
+        "select": tournament_sel,
+        "crossover": two_point_crossover,
+        "elitism": False,
+        "mutate": inversion_mutation,
+        "mut_prob": 0.9,
+    },
+    {
+        "gens": 100,
+        "xo_prob": 0.8,
+        "select": tournament_sel,
+        "crossover": two_point_crossover,
+        "elitism": False,
+        "mutate": inversion_mutation,
+        "mut_prob": 0.5,
+    },
+    {
+        "gens": 100,
+        "xo_prob": 0.5,
+        "select": tournament_sel,
+        "crossover": two_point_crossover,
+        "elitism": False,
+        "mutate": inversion_mutation,
+        "mut_prob": 0.8,
+    },
+    
 ]
 
 
 ''' TO RUN EPOCHS'''
-run_epochs(30)
+# run_epochs(30)
 
 '''TO RUN A SINGLE EPOCH WITH A PLOT'''
 run_multiple_configurations(configurations, epochs=False, printable=False)
