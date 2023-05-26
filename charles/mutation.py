@@ -41,8 +41,3 @@ def inversion_mutation(individual):
 
 
 
-
-
-if __name__ == '__main__':
-    print('a')
-

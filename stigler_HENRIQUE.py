@@ -261,76 +261,66 @@ def run_epochs(numb_epochs):
 
 # Create a set of configurations
 configurations = [
+    # {
+    #     "gens": 100,
+    #     "xo_prob": round(random.uniform(0.5,1),2),
+    #     "select": tournament_sel,
+    #     "crossover": two_point_crossover,
+    #     "elitism": True,
+    #     "mutate": inversion_mutation,
+    #     "mut_prob": round(random.uniform(0.5,1),2),
+    # },
+    # {
+    #     "gens": 100,
+    #     "xo_prob": round(random.uniform(0.5,1),2),
+    #     "select": tournament_sel,
+    #     "crossover": two_point_crossover,
+    #     "elitism": True,
+    #     "mutate": inversion_mutation,
+    #     "mut_prob": round(random.uniform(0.5,1),2),
+    # },
+    # {
+    #     "gens": 100,
+    #     "xo_prob": round(random.uniform(0.5,1),2),
+    #     "select": tournament_sel,
+    #     "crossover": two_point_crossover,
+    #     "elitism": True,
+    #     "mutate": inversion_mutation,
+    #     "mut_prob": round(random.uniform(0.5,1),2),
+    # },
     {
         "gens": 100,
         "xo_prob": 1,
         "select": tournament_sel,
-        "crossover": two_point_crossover,
-        "elitism": False,
-        "mutate": inversion_mutation,
+        "crossover": single_point_co,
+        "elitism": True,
+        "mutate": uniform_mutation,
         "mut_prob": 1,
     },
     {
         "gens": 100,
-        "xo_prob": 0.6,
+        "xo_prob": 0.7,
         "select": tournament_sel,
-        "crossover": two_point_crossover,
-        "elitism": False,
-        "mutate": inversion_mutation,
-        "mut_prob": 0.6,
-    },
-    {
-        "gens": 100,
-        "xo_prob": 0.3,
-        "select": tournament_sel,
-        "crossover": two_point_crossover,
-        "elitism": False,
-        "mutate": inversion_mutation,
-        "mut_prob": 0.3,
-    },
-    {
-        "gens": 100,
-        "xo_prob": 0.9,
-        "select": tournament_sel,
-        "crossover": two_point_crossover,
-        "elitism": False,
-        "mutate": inversion_mutation,
-        "mut_prob": 0.3,
-    },
-    {
-        "gens": 100,
-        "xo_prob": 0.3,
-        "select": tournament_sel,
-        "crossover": two_point_crossover,
-        "elitism": False,
-        "mutate": inversion_mutation,
-        "mut_prob": 0.9,
-    },
-    {
-        "gens": 100,
-        "xo_prob": 0.8,
-        "select": tournament_sel,
-        "crossover": two_point_crossover,
-        "elitism": False,
-        "mutate": inversion_mutation,
-        "mut_prob": 0.5,
+        "crossover": single_point_co,
+        "elitism": True,
+        "mutate": uniform_mutation,
+        "mut_prob": 0.7,
     },
     {
         "gens": 100,
         "xo_prob": 0.5,
         "select": tournament_sel,
-        "crossover": two_point_crossover,
-        "elitism": False,
-        "mutate": inversion_mutation,
-        "mut_prob": 0.8,
-    },
-    
+        "crossover": single_point_co,
+        "elitism": True,
+        "mutate": uniform_mutation,
+        "mut_prob": 0.5,
+    },  
 ]
 
 
 ''' TO RUN EPOCHS'''
-# run_epochs(30)
+run_epochs(400)
 
 '''TO RUN A SINGLE EPOCH WITH A PLOT'''
-run_multiple_configurations(configurations, epochs=False, printable=False)
+# run_multiple_configurations(configurations, epochs=False, printable=True)
 
