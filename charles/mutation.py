@@ -1,6 +1,14 @@
 import random
 
 def uniform_mutation(individual):
+    """Uniform mutation for a GA individual. Swaps the bits.
+
+    Args:
+        individual (Individual): A GA individual from charles.py
+
+    Returns:
+        Individual: Mutated Individual
+    """
  
     for i in range(len(individual)):
         lower_bound= individual[i] - individual[i]*0.1
@@ -18,7 +26,6 @@ def swap_mutation(individual):
         Individual: Mutated Individual
     """
     
-
     mut_indexes = random.sample(range(0, len(individual)), 2)
     individual[mut_indexes[0]], individual[mut_indexes[1]] = individual[mut_indexes[1]], individual[mut_indexes[0]]
     return individual

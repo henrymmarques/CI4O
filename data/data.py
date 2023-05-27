@@ -192,7 +192,6 @@ data = [
         0.4, 3, 0
     ],
 ]
-# for i in range(len(nutrients)):
-#     print(nutrients[i][1])
 
-# print(len(data))
+# print(data[68])
+

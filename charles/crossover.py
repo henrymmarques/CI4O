@@ -3,6 +3,15 @@ from data.data import nutrients, data
 import numpy as np
 
 def two_point_crossover(parent1, parent2):
+    """Implementation of two point crossover.
+
+    Args:
+        parent1 (Individual): First parent for crossover.
+        parent2 (Individual): Second parent for crossover.
+
+    Returns:
+        Individuals: Two offspring, resulting from the crossover.
+    """
     # Choose two random points in the genome
     pt1 = random.randint(0, len(parent1) - 1)
     pt2 = random.randint(0, len(parent1) - 1)
@@ -55,7 +64,17 @@ def arithmetic_xo(p1, p2):
     return o1, o2
 
 
-def sbx(parent1, parent2, eta=10, prob=0.5):
+def sbx(parent1, parent2, eta=10):
+    """Implementation of sbx crossover.
+
+    Args:
+        parent1 (Individual): First parent for crossover.
+        parent2 (Individual): Second parent for crossover.
+        eta: distribution index of the crossover
+
+    Returns:
+        Individuals: Two offspring, resulting from the crossover.
+    """
     # Ensure parents are NumPy arrays
     parent1 = np.array(parent1)
     parent2 = np.array(parent2)
@@ -103,20 +122,3 @@ def sbx(parent1, parent2, eta=10, prob=0.5):
     return offspring1.tolist(), offspring2.tolist()
 
 
-# if __name__ == '__main__':
-    # # Define the indices of the two parents
-    # parent1_index = 0
-    # parent2_index = 1
-
-    # # Generate the two parents
-    # parent1 = data[parent1_index][2:]
-    # parent2 = data[parent2_index][2:]
-
-    # # Perform the two-point crossover
-    # child = two_point_crossover(parent1, parent2)
-
-    # # Print the parents and child
-    # print(f"Parent 1: {data[parent1_index]}")
-    # print(f"Parent 2: {data[parent2_index]}")
-    # print(f"Child: {[''] + [''] + child}")  # Add empty elements to match data format
-    # print('asda0')
